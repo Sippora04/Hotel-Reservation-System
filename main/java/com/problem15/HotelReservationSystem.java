@@ -36,7 +36,7 @@ public class HotelReservationSystem {
 		}while(choice == 'Y' || choice == 'y');
 	}
 	    
-	public static void getCheapestHotel() {
+	public static void getCheapestHotel(int choice) {
 		Date startDate = null;
 		Date endDate = null;
 		System.out.println("Enter Start Date :");
@@ -63,14 +63,27 @@ public class HotelReservationSystem {
 		}
 		long noOfWeekends = noOfDays - noOfWeekdays;
 		long minimumCost = 0;
-		for(Hotel hotel: hotelList) {
-			long totalCost = noOfWeekdays * hotel.getWeekdayRate() + noOfWeekends * hotel.getWeekendRate();
-	        hotel.setTotalCost((int) totalCost);
-	        if(minimumCost == 0)
-	        	minimumCost = hotel.getTotalCost();
-	        if(hotel.getTotalCost() < minimumCost)
-				minimumCost = hotel.getTotalCost();
-	     }
+		switch(choice) {
+		case 1:	for(Hotel hotel: hotelList) {
+					long totalCost = noOfWeekdays * hotel.getWeekdayRate() + noOfWeekends * hotel.getWeekendRate();
+			        hotel.setTotalCost((int) totalCost);
+			        if(minimumCost == 0)
+			        	minimumCost = hotel.getTotalCost();
+			        if(hotel.getTotalCost() < minimumCost)
+			        	{minimumCost = hotel.getTotalCost();}
+			     }
+				break;
+		case 2: for(Hotel hotel: hotelList) {
+					long totalCost = noOfWeekdays * hotel.getWeekdayRate() + noOfWeekends * hotel.getWeekendRate();
+			        hotel.setTotalCost((int) totalCost);
+			        if(minimumCost == 0)
+			        	minimumCost = hotel.getTotalCost();
+			        if(hotel.getTotalCost() < minimumCost)
+			        	{minimumCost = hotel.getTotalCost();}
+			     }
+				 break;
+		default: System.out.println("Invlaid");
+		}
 		 List<String> cheapestListOfHotelName = new ArrayList<>();
 		 int maximumRating = 0;
 		 String cheapestAndBestRatedHotel = "";
@@ -143,7 +156,7 @@ public class HotelReservationSystem {
         else
         	customerObj.setCustomerType("Reward");
 		System.out.println("Enter dates[Example: 09/11/2020] for finding best rated cheapest hotel: ");
-	    getCheapestHotel();
+	    getCheapestHotel(choice);
 	    System.out.println("\n Enter dates[Example: 12/11/2020] to finding best rated hotel: ");
 	    getBestRatedHotel();
 	}
