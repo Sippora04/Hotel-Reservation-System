@@ -4,7 +4,7 @@ public class Hotel {
 	public String hotelName;
 	public int weekdayRate;
 	public int weekendRate;
-	public int totalCost;
+	public long totalCost;
 	public int hotelRating;
 	
 	public Hotel(String hotelName, int weekdayRate, int weekendRate,int hotelRating) {
@@ -38,11 +38,11 @@ public class Hotel {
 	public void setWeekendRate(int weekendRate) {
 		this.weekendRate = weekendRate;
 	}
-	public int getTotalCost() {
+	public long getTotalCost() {
 		return totalCost;
 	}
 
-	public void setTotalCost(int totalCost) {
+	public void setTotalCost(long totalCost) {
 		this.totalCost = totalCost;
 	}
 	

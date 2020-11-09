@@ -80,12 +80,60 @@ public class HotelReservationSystem {
 		 }
 		 System.out.println("Cheapest Hotel is: " + cheapestAndBestRatedHotel + ", Rating : " + maximumRating + " and Total cost $" + minimumCost);
 	}
-		
+	
+	public static void getBestRatedHotel() {
+		Date startDate = null;
+		Date endDate = null;
+		System.out.println("Enter Start Date :");
+		String start = sc.next();
+		System.out.println("Enter End date :");
+		String end = sc.next();
+		try {
+			startDate = new SimpleDateFormat("dd/MM/yyyy").parse(start);
+			endDate = new SimpleDateFormat("dd/MM/yyyy").parse(end); 
+		}	catch (ParseException e) {
+				e.printStackTrace();
+			} 
+		long noOfDays = 1 + (endDate.getTime() - startDate.getTime())/1000/60/60/24;
+		Calendar startCalendar = Calendar.getInstance();
+		startCalendar.setTime(startDate);
+		Calendar endcalendar = Calendar.getInstance();
+		endcalendar.setTime(endDate);
+		long noOfWeekdays = 0;
+		while(startCalendar.getTimeInMillis() <= endcalendar.getTimeInMillis()) {
+			if((startCalendar.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY ) && (startCalendar.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY )) {
+				noOfWeekdays++;
+			}
+			startCalendar.add(Calendar.DAY_OF_MONTH, 1);
+		}
+		long noOfWeekends = noOfDays - noOfWeekdays;
+		int maximumRating = 0;
+		int count = 0;
+		for(Hotel hotel: hotelList) {
+			long totalCost = noOfWeekdays * hotel.getWeekdayRate() + noOfWeekends * hotel.getWeekendRate();
+			hotel.setTotalCost(totalCost);
+	        if(maximumRating == 0)
+	        	maximumRating = hotel.getHotelRating();
+	        if(hotel.getHotelRating() > maximumRating)
+				maximumRating = hotel.getHotelRating();
+	     }
+		 List<String> bestRatedHotelNameList = new ArrayList<>();
+		 for(int i = 0; i < hotelList.size(); i++) {
+			 if(hotelList.get(i).getHotelRating() == maximumRating) {
+				 count = i;
+				 bestRatedHotelNameList.add(hotelList.get(i).getHotelName());
+			 }
+		 }
+		 System.out.println("Highest Rated Hotel: " + bestRatedHotelNameList + " with Rating: " + maximumRating + " and Total Rates $" + hotelList.get(count).getTotalCost());
+	}
+	
 	public static void main( String[] args ) {
 		System.out.println("Welcome to Hotel Reservation Program");
 	    System.out.println("Adding a Hotel:");        
 		addHotel();
 		System.out.println("Enter dates[Example: 20/11/2020] for finding cheapest hotel: ");
 	    getCheapestHotel();
+	    System.out.println("\n Enter dates[Example: 20/11/2020] to finding best rated hotel: ");
+	    getBestRatedHotel();
 	}
 }
