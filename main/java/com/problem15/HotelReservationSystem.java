@@ -71,11 +71,13 @@ public class HotelReservationSystem {
 	        	minimumCost = hotel.getTotalCost();
 	    }
 		List<String> cheapestListOfHotelName = new ArrayList<>();
-		 for(int i = 0; i < hotelList.size(); i++) {
+		List<Integer> cheapestHotelRating = new ArrayList<>();
+		for(int i = 0; i < hotelList.size(); i++) {
 			 if(hotelList.get(i).getTotalCost() == minimumCost)
 				 cheapestListOfHotelName.add(hotelList.get(i).getHotelName());
+			 	 cheapestHotelRating.add(hotelList.get(i).getHotelRating());
 		 }
-		 System.out.println("\nCheapest Hotel is: " + cheapestListOfHotelName + " with total cost $"+minimumCost);
+		 System.out.println("\nCheapest Hotel is: " + cheapestListOfHotelName + ",Rating: " + cheapestHotelRating + " and Total rates $"+minimumCost);
 	}
 		
 	public static void main( String[] args ) {
