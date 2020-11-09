@@ -5,12 +5,14 @@ public class Hotel {
 	public int weekdayRate;
 	public int weekendRate;
 	public int totalCost;
+	public int hotelRating;
 	
-	public Hotel(String hotelName, int weekdayRate, int weekendRate) {
+	public Hotel(String hotelName, int weekdayRate, int weekendRate, int hotelRating) {
 		super();
 		this.weekdayRate = weekdayRate;
 		this.weekendRate = weekendRate;
 		this.hotelName = hotelName;
+		this.hotelRating = hotelRating;
 	}
 	
 	public String getHotelName() {
@@ -37,6 +39,7 @@ public class Hotel {
 	public void setTotalCost(int totalCost) {
 		this.totalCost = totalCost;
 	}
+	
 
 	@Override
 	public String toString() {

@@ -25,7 +25,9 @@ public class HotelReservationSystem {
 			int weekdayRate = sc.nextInt();
 			System.out.print("Enter Weekend Rate: $");
 			int weekendRate = sc.nextInt();
-			Hotel hotelObj = new Hotel(hotelName, weekdayRate, weekendRate);
+			System.out.print("Enter Hotel Rating: $");
+			int hotelRating = sc.nextInt();
+			Hotel hotelObj = new Hotel(hotelName, weekdayRate, weekendRate, hotelRating);
 			hotelList.add(hotelObj);
 			System.out.println("Do you want to add more Hotels(Y/N or y/n)");
 			choice = sc.next().charAt(0);
@@ -64,7 +66,7 @@ public class HotelReservationSystem {
 			long totalCost = noOfWeekdays * hotel.getWeekdayRate() + noOfWeekends * hotel.getWeekendRate();
 	        hotel.setTotalCost((int) totalCost);
 	        if(minimumCost == 0)
-	        	minimumCost=hotel.getTotalCost();
+	        	minimumCost = hotel.getTotalCost();
 	        if(hotel.getTotalCost() < minimumCost)
 	        	minimumCost = hotel.getTotalCost();
 	    }
@@ -73,7 +75,7 @@ public class HotelReservationSystem {
 			 if(hotelList.get(i).getTotalCost() == minimumCost)
 				 cheapestListOfHotelName.add(hotelList.get(i).getHotelName());
 		 }
-		 System.out.println("Cheapest Hotel is: " + cheapestListOfHotelName + " with total cost $"+minimumCost);
+		 System.out.println("\nCheapest Hotel is: " + cheapestListOfHotelName + " with total cost $"+minimumCost);
 	}
 		
 	public static void main( String[] args ) {
