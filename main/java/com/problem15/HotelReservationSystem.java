@@ -14,6 +14,7 @@ public class HotelReservationSystem {
 		
 	public static void addHotel() {
 		char choice;
+		System.out.println("Enter Hotel details \n");        			
 		do {
 			System.out.println("Enter Hotel Name:");
 			String hotelName = sc.next();
@@ -23,7 +24,11 @@ public class HotelReservationSystem {
 			int weekendRate = sc.nextInt();
 			System.out.print("Enter Hotel Rating: ");
 			int hotelRating = sc.nextInt();
-			Hotel hotelObj = new Hotel(hotelName, weekdayRate, weekendRate, hotelRating);
+			System.out.print("Enter Weekday rate for Reward Customer: ");
+			int weekdayRewardRate = sc.nextInt();
+			System.out.print("Enter Weekdend rate for Reward Customer: ");
+			int weekendRewardRate = sc.nextInt();
+			Hotel hotelObj = new Hotel(hotelName, weekdayRate, weekendRate, hotelRating, weekdayRewardRate, weekendRewardRate);
 			hotelList.add(hotelObj);
 			System.out.println("Do you want to add more Hotels(Y/N or y/n)");
 			choice = sc.next().charAt(0);
@@ -35,13 +40,13 @@ public class HotelReservationSystem {
 		Date startDate = null;
 		Date endDate = null;
 		System.out.println("Enter Start Date :");
-		String start=sc.next();
+		String start = sc.next();
 		System.out.println("Enter End date :");
-		String end=sc.next();
+		String end = sc.next();
 		try {
 			startDate = new SimpleDateFormat("dd/MM/yyyy").parse(start);
 			endDate = new SimpleDateFormat("dd/MM/yyyy").parse(end); 
-		}	catch (ParseException e) {
+		} catch (ParseException e) {
 				e.printStackTrace();
 			} 
 		long noOfDays = 1 + (endDate.getTime() - startDate.getTime())/1000/60/60/24;
@@ -62,7 +67,7 @@ public class HotelReservationSystem {
 			long totalCost = noOfWeekdays * hotel.getWeekdayRate() + noOfWeekends * hotel.getWeekendRate();
 	        hotel.setTotalCost((int) totalCost);
 	        if(minimumCost == 0)
-	        	minimumCost=hotel.getTotalCost();
+	        	minimumCost = hotel.getTotalCost();
 	        if(hotel.getTotalCost() < minimumCost)
 				minimumCost = hotel.getTotalCost();
 	     }
@@ -76,9 +81,9 @@ public class HotelReservationSystem {
 					 maximumRating = hotelList.get(i).hotelRating;
 					 cheapestAndBestRatedHotel = hotelList.get(i).getHotelName();
 				 }
-			}
+			 }
 		 }
-		 System.out.println("Cheapest Hotel is: " + cheapestAndBestRatedHotel + ", Rating : " + maximumRating + " and Total cost $" + minimumCost);
+		 System.out.println("Cheapest Hotel is: " + cheapestAndBestRatedHotel + ", Rating: " + maximumRating + " and Total Rate $" + minimumCost);
 	}
 	
 	public static void getBestRatedHotel() {
@@ -91,7 +96,7 @@ public class HotelReservationSystem {
 		try {
 			startDate = new SimpleDateFormat("dd/MM/yyyy").parse(start);
 			endDate = new SimpleDateFormat("dd/MM/yyyy").parse(end); 
-		}	catch (ParseException e) {
+		} catch (ParseException e) {
 				e.printStackTrace();
 			} 
 		long noOfDays = 1 + (endDate.getTime() - startDate.getTime())/1000/60/60/24;
@@ -111,29 +116,35 @@ public class HotelReservationSystem {
 		int count = 0;
 		for(Hotel hotel: hotelList) {
 			long totalCost = noOfWeekdays * hotel.getWeekdayRate() + noOfWeekends * hotel.getWeekendRate();
-			hotel.setTotalCost(totalCost);
+	        hotel.setTotalCost(totalCost);
 	        if(maximumRating == 0)
 	        	maximumRating = hotel.getHotelRating();
 	        if(hotel.getHotelRating() > maximumRating)
-				maximumRating = hotel.getHotelRating();
-	     }
-		 List<String> bestRatedHotelNameList = new ArrayList<>();
-		 for(int i = 0; i < hotelList.size(); i++) {
-			 if(hotelList.get(i).getHotelRating() == maximumRating) {
-				 count = i;
-				 bestRatedHotelNameList.add(hotelList.get(i).getHotelName());
-			 }
-		 }
-		 System.out.println("Highest Rated Hotel: " + bestRatedHotelNameList + " with Rating: " + maximumRating + " and Total Rates $" + hotelList.get(count).getTotalCost());
+	        	maximumRating = hotel.getHotelRating();
+	    }
+		List<String> bestRatedHotelNameList = new ArrayList<>();
+		for(int i = 0; i < hotelList.size(); i++) {
+			if(hotelList.get(i).getHotelRating() == maximumRating) {
+				count = i;
+				bestRatedHotelNameList.add(hotelList.get(i).getHotelName());
+			}
+		}
+		System.out.println("Highest Rated Hotel: " + bestRatedHotelNameList + ", Rating: " + maximumRating + " and Total Rate $" + hotelList.get(count).getTotalCost());
 	}
 	
 	public static void main( String[] args ) {
 		System.out.println("Welcome to Hotel Reservation Program");
-	    System.out.println("Adding a Hotel:");        
 		addHotel();
-		System.out.println("Enter dates[Example: 20/11/2020] for finding cheapest hotel: ");
+		Customer customerObj = new Customer();
+		System.out.println("\nEnter the Customer Type for:\n(1) Regular Customer\n(2) Reward Customer");
+        int choice = sc.nextInt();
+        if(choice == 1)
+        	customerObj.setCustomerType("Regular");
+        else
+        	customerObj.setCustomerType("Reward");
+		System.out.println("Enter dates[Example: 09/11/2020] for finding best rated cheapest hotel: ");
 	    getCheapestHotel();
-	    System.out.println("\n Enter dates[Example: 20/11/2020] to finding best rated hotel: ");
+	    System.out.println("\n Enter dates[Example: 12/11/2020] to finding best rated hotel: ");
 	    getBestRatedHotel();
 	}
 }
